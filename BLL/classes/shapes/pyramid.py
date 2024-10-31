@@ -1,5 +1,5 @@
 from BLL.classes.shapes.shape import Shape
-import numpy as np
+
 
 class Pyramid(Shape):
     def create_shape(self):
@@ -32,20 +32,4 @@ class Pyramid(Shape):
                     j1 += 1
                 i1 -= 1
             char = "#"
-
-
-        #
-        # num = 1
-        # offset = 0
-        # char = "*"
-        # for i in reversed(range(width)):
-        #     for j in reversed(range(height)):
-        #         j1 = offset
-        #         for k in reversed(range(width)):
-        #             result[i1][j1] = shape[j][i][k]
-        #             j1 += 1
-        #         i1 -= 1
-        #     offset += 0
-        #     i1 = len(result) - 1 - offset
-        #     num += 1
         return result

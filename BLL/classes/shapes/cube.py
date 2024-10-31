@@ -10,12 +10,12 @@ class Cube(Shape):
                     shape[i][j][k] = "*"
         return shape
 
-    def to_2d(self):
+    def to_2d(self, debug = False):
         shape = self.shape
         size = self.size
         parts = 3 * (size // 5)
         parts = 1 if parts == 0 else parts
-        grid_size = self.shape.size + parts
+        grid_size = size + parts
         result = [[" " for _ in range(grid_size)] for _ in range(grid_size)]
         i1 = len(result) - 1
         num = 1
@@ -25,8 +25,10 @@ class Cube(Shape):
             for j in reversed(range(size)):
                 j1 = offset
                 for k in reversed(range(size)):
-                    if result[i1][j1] == " " and shape[i][j][k] == "*":
+                    if result[i1][j1] == " " and shape[i][j][k] == "*" and not debug:
                         result[i1][j1] = char
+                    elif result[i1][j1] == " " and shape[i][j][k] == "*" and debug:
+                        result[i1][j1] = num
                     j1 += 1
                 i1 -= 1
             offset += 1

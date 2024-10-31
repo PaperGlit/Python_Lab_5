@@ -2,11 +2,12 @@ from abc import ABC, abstractmethod
 
 
 class Shape(ABC):
-    def __init__(self, length):
-        self.size = length
+    def __init__(self, size):
+        self.size = size
         self.shape = self.create_shape()
         self.pos_x = 0
         self.pos_y = 0
+        self.pos_z = 0
 
     @abstractmethod
     def create_shape(self):

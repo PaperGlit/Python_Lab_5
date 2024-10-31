@@ -5,17 +5,23 @@ class Sphere(Shape):
     def create_shape(self):
         shape = self.create_array(self.size, self.size)
         center = (self.size + 1) // 2
-        cycle = list(range(1, center + 1)) + list(range(center - (self.size % 2), 0, -1))
+        if self.size % 2 == 0:
+            up_part = list(range(center + 1, self.size + 1))
+            cycle = up_part + up_part[::-1]
+        else:
+            up_part = list(range(center, self.size + 1))
+            cycle = up_part + up_part[-2::-1]
         j = 0
         for i in cycle:
             if i >= 1:
                 shape[j] = self.create_circle(i)
             j += 1
-        return shape
+        final_shape = [[[shape[z][x][y] for y in range(self.size)]
+                        for z in range(self.size)]for x in range(self.size)]
+        return final_shape
 
     def create_circle(self, diameter):
-        result = [[" " for _ in range(self.size)] for _ in range(self.size)]
-        result1 = [[" " for _ in range(diameter)] for _ in range(diameter)]
+        result = [[" " for _ in range(diameter)] for _ in range(diameter)]
         radius = diameter / 2 - .5
         r = (radius + .25) ** 2 + 1
         for i in range(diameter):
@@ -23,16 +29,38 @@ class Sphere(Shape):
             for j in range(diameter):
                 x = (j - radius) ** 2
                 if x + y <= r:
-                    result1[i][j] = "*"
+                    result[i][j] = "*"
                 else:
-                    result1[i][j] = " "
-        expand_start = (len(result) - len(result1)) // 2
-        expand_end = self.size - expand_start if (len(result) - len(result1)) % 2 == 0 else self.size - expand_start - 1
+                    result[i][j] = " "
+        return self.expand_array(result)
+
+    def expand_array(self, array2):
+        array1 = [[" " for _ in range(self.size)] for _ in range(self.size)]
+        expand_start = (len(array1) - len(array2)) // 2
+        expand_end = self.size - expand_start if (len(array1) - len(array2)) % 2 == 0 else self.size - expand_start - 1
         i1, j1 = 0, 0
         for i in range(expand_start, expand_end):
             for j in range(expand_start, expand_end):
-                result[i][j] = result1[i1][j1]
+                array1[i][j] = array2[i1][j1]
                 j1 += 1
             j1 = 0
             i1 += 1
+        return array1
+
+    def to_2d(self, debug = False):
+        shape = self.shape
+        size = self.size
+        result = [[" " for _ in range(size)] for _ in range(size)]
+        chars = ["#", "*", "%", "@"]
+        char = 0
+        num = 1
+        for i in range(size):
+            for j in range(size):
+                for k in range(size):
+                    if result[j][k] == " " and shape[j][i][k] == "*" and not debug:
+                        result[j][k] = chars[char]
+                    elif result[j][k] == " " and shape[j][i][k] == "*" and debug:
+                        result[j][k] = num
+            char = 0 if char == len(chars) - 1 else char + 1
+            num += 1
         return result

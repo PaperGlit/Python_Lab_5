@@ -1,13 +1,13 @@
 from BLL.classes.shapes.cube import Cube
 from BLL.classes.shapes.pyramid import Pyramid
 from BLL.classes.shapes.sphere import Sphere
-from BLL.classes.shape_manager import ShapeManager
 
-for i in range(5, 100):
-    cube = Pyramid(i)
-    shape_2d = cube.to_2d()
+
+for i in range(1):
+    cube = Sphere(50)
+    shape_2d = cube.to_2d(False)
     for j in shape_2d:
-        print("".join(j))
+        print("".join(str(j)))
 # for i in range(cube.size):
 #     for j in range(cube.size):
 #         print(" ".join(map(str, cube.shape[i][j])))

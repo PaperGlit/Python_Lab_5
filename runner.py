@@ -3,11 +3,15 @@ from BLL.classes.shapes.pyramid import Pyramid
 from BLL.classes.shapes.sphere import Sphere
 
 
-for i in range(1):
-    cube = Sphere(50)
+for i in range(5, 100):
+    cube = Cube(i)
+    cube.move(3, -2, -2)
+    print("Cycle: " + str(i))
     shape_2d = cube.to_2d(False)
+
     for j in shape_2d:
         print("".join(str(j)))
+
 # for i in range(cube.size):
 #     for j in range(cube.size):
 #         print(" ".join(map(str, cube.shape[i][j])))

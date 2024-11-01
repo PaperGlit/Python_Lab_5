@@ -3,9 +3,9 @@ from BLL.classes.shapes.pyramid import Pyramid
 from BLL.classes.shapes.sphere import Sphere
 
 
-for i in range(5, 100):
+for i in range(5, 10):
     cube = Cube(i)
-    cube.move(3, -2, -2)
+    cube.move(2, -2, -2)
     print("Cycle: " + str(i))
     shape_2d = cube.to_2d(False)
 

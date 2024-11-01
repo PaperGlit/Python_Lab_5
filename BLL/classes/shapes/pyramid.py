@@ -13,17 +13,21 @@ class Pyramid(Shape):
                     shape[j][i][k] = "*"
             start -= 1
             end += 1
-        return shape
+        final_shape = [[[shape[z][x][y] for z in range(len(shape))]
+                        for x in range(len(shape[0]))] for y in range(len(shape[0][0]))]
+        return final_shape
 
     def to_2d(self, debug = False):
         shape = self.shape
-        height = self.size
-        width = len(shape)
-        result = [[" " for _ in range(width + 1)] for _ in range(height + 1)]
-        midpoint = (width - 1) // 2
+        z_offset = abs(self.pos_z) if self.pos_z < 0 else 0
+        depth = len(shape)
+        height = len(shape[0])
+        width = len(shape[0][0])
+        result = [[" " for _ in range(width + 1 + z_offset)] for _ in range(height + 1 + z_offset)]
+        midpoint = (depth - abs(self.pos_z) - 1) // 2 + z_offset
         char = "*"
         num = 1
-        for offset in range(2):
+        for offset in range(z_offset, z_offset + 2, 1):
             i1 = len(result) - 1 - offset
             for i in reversed(range(height)):
                 j1 = offset

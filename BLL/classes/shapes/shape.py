@@ -26,7 +26,7 @@ class Shape(ABC):
         self.size = new_size
         self.shape = self.create_shape()
 
-    def move(self, x = 0, y = 0, z = 0):
+    def move(self, x=0, y=0, z=0):
         self.pos_x += x
         self.pos_y += y
         self.pos_z += z
@@ -36,25 +36,18 @@ class Shape(ABC):
         size_z = len(shape)
         if self.pos_z != 0:
             for _ in range(abs(self.pos_z)):
-                shape.append([[[" " for _ in range(size_x)] for _ in range(size_y)] for _ in range(size_z)])
-            if self.pos_z < 0:
-                shape = shape[self.pos_z:] + shape[:self.pos_z]
+                empty_layer = [[" " for _ in range (size_x)] for y in range(size_y)]
+                shape.append(empty_layer) if self.pos_z > 0 else shape.insert(0, empty_layer)
             size_z = len(shape)
         if self.pos_y != 0:
             for i in range(size_z):
                 for _ in range(abs(self.pos_y)):
-                    shape[i].append([[" " for _ in range(size_x)] for _ in range(abs(size_y))])
-            if self.pos_y < 0:
-                for i in range(size_z):
-                    shape[i] = shape[i][self.pos_y:] + shape[i][:self.pos_y]
-            size_y = len(shape[0])
+                    empty_row = [" " for _ in range (size_x)]
+                    shape[i].append(empty_row) if self.pos_y > 0 else shape[i].insert(0, empty_row)
+                size_y = len(shape[i])
         if self.pos_x != 0:
             for i in range(size_z):
                 for j in range(size_y):
                     for _ in range(abs(self.pos_x)):
-                        shape[i][j].append([" " for _ in range(size_x)])
-            if self.pos_x < 0:
-                for i in range(size_z):
-                    for j in range(size_y):
-                        shape[i][j] = shape[i][j][self.pos_x:] + shape[i][j][:self.pos_x]
+                        shape[i][j].append(" ") if self.pos_x < 0 else shape[i][j].insert(0, " ")
         self.shape = shape

@@ -1,13 +1,26 @@
 from abc import ABC, abstractmethod
+import random
 
 
 class Shape(ABC):
-    def __init__(self, size):
+    def __init__(self, size, color="\033[39m"):
         self.size = size
         self.shape = self.create_shape()
         self.pos_x = 0
         self.pos_y = 0
         self.pos_z = 0
+        self.color = "\033[" + str(random.randint(31, 39)) + "m" if color == "random" else color
+
+    def __str__(self):
+        result = [self.color]
+        shape_2d = self.to_2d()
+        for i in shape_2d:
+            for j in i:
+                result.append(str(j))
+            result.append("\n")
+        result.pop()
+        result.append("\033[0m")
+        return "".join(result)
 
     @abstractmethod
     def create_shape(self):
@@ -25,6 +38,8 @@ class Shape(ABC):
     def change_size(self, new_size):
         self.size = new_size
         self.shape = self.create_shape()
+        if self.pos_x != 0 or self.pos_y != 0 or self.pos_z != 0:
+            self.move()
 
     def move(self, x=0, y=0, z=0):
         self.pos_x += x
@@ -36,7 +51,7 @@ class Shape(ABC):
         size_z = len(shape)
         if self.pos_z != 0:
             for _ in range(abs(self.pos_z)):
-                empty_layer = [[" " for _ in range (size_x)] for y in range(size_y)]
+                empty_layer = [[" " for _ in range (size_x)] for _ in range(size_y)]
                 shape.append(empty_layer) if self.pos_z > 0 else shape.insert(0, empty_layer)
             size_z = len(shape)
         if self.pos_y != 0:

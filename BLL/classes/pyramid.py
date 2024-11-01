@@ -1,4 +1,4 @@
-from BLL.classes.shapes.shape import Shape
+from BLL.classes.shape import Shape
 
 
 class Pyramid(Shape):
@@ -19,7 +19,7 @@ class Pyramid(Shape):
 
     def to_2d(self, debug = False):
         shape = self.shape
-        z_offset = abs(self.pos_z) if self.pos_z < 0 else 0
+        z_offset = max(0, -self.pos_z)
         depth = len(shape)
         height = len(shape[0])
         width = len(shape[0][0])

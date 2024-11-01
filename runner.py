@@ -1,11 +1,9 @@
-from BLL.classes.shapes.cube import Cube
-from BLL.classes.shapes.pyramid import Pyramid
-from BLL.classes.shapes.sphere import Sphere
+from BLL.classes.sphere import Sphere
 
 
 for i in range(5, 10):
-    cube = Cube(i)
-    cube.move(2, -2, -2)
+    cube = Sphere(i)
+    cube.move(0, 0, -4)
     print("Cycle: " + str(i))
     shape_2d = cube.to_2d(False)
 

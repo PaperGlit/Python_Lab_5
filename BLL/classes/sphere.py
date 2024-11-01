@@ -1,4 +1,4 @@
-from BLL.classes.shapes.shape import Shape
+from BLL.classes.shape import Shape
 
 
 class Sphere(Shape):
@@ -16,8 +16,8 @@ class Sphere(Shape):
             if i >= 1:
                 shape[j] = self.create_circle(i)
             j += 1
-        final_shape = [[[shape[z][x][y] for y in range(self.size)]
-                        for z in range(self.size)]for x in range(self.size)]
+        final_shape = [[[shape[z][y][x] for x in range(self.size)]
+                        for y in range(self.size)] for z in range(self.size) ]
         return final_shape
 
     def create_circle(self, diameter):
@@ -49,18 +49,21 @@ class Sphere(Shape):
 
     def to_2d(self, debug = False):
         shape = self.shape
-        size = self.size
-        result = [[" " for _ in range(size)] for _ in range(size)]
+        z_offset = max(0, -self.pos_z)
+        depth = len(shape)
+        height = len(shape[0])
+        width = len(shape[0][0])
+        result = [[" " for _ in range(width + z_offset)] for _ in range(height + z_offset)]
         chars = ["#", "*", "%", "@"]
         char = 0
         num = 1
-        for i in range(size):
-            for j in range(size):
-                for k in range(size):
-                    if result[j][k] == " " and shape[j][i][k] == "*" and not debug:
-                        result[j][k] = chars[char]
-                    elif result[j][k] == " " and shape[j][i][k] == "*" and debug:
-                        result[j][k] = num
+        for i in range(depth):
+            for j in range(height):
+                for k in range(width):
+                    if result[j][k + z_offset] == " " and shape[i][j][k] == "*" and not debug:
+                        result[j][k + z_offset] = chars[char]
+                    elif result[j][k + z_offset] == " " and shape[i][j][k] == "*" and debug:
+                        result[j][k + z_offset] = num
             char = 0 if char == len(chars) - 1 else char + 1
             num += 1
         return result

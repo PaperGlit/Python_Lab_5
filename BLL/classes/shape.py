@@ -3,13 +3,14 @@ import random
 
 
 class Shape(ABC):
-    def __init__(self, size, color="\033[39m"):
+    def __init__(self, size, color="\033[39m", debug=False):
         self.size = size
         self.shape = self.create_shape()
         self.pos_x = 0
         self.pos_y = 0
         self.pos_z = 0
         self.color = "\033[" + str(random.randint(31, 39)) + "m" if color == "random" else color
+        self.debug = debug
 
     def __str__(self):
         result = [self.color]

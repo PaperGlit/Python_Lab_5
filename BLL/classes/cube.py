@@ -10,7 +10,7 @@ class Cube(Shape):
                     shape[i][j][k] = "*"
         return shape
 
-    def to_2d(self, debug=False):
+    def to_2d(self):
         shape = self.shape
         z_size = len(shape)
         z_offset = max(0, -self.pos_z)
@@ -29,7 +29,7 @@ class Cube(Shape):
                 col_index = offset
                 for k, cell in enumerate(row):
                     if result[row_index][col_index] == " " and cell == "*":
-                        result[row_index][col_index] = str(num) if debug else char
+                        result[row_index][col_index] = str(num) if self.debug else char
                     col_index += 1
                 row_index -= 1
             offset += 1

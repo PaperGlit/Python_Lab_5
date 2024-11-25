@@ -47,7 +47,7 @@ class Sphere(Shape):
             i1 += 1
         return array1
 
-    def to_2d(self, debug = False):
+    def to_2d(self):
         shape = self.shape
         z_offset = max(0, -self.pos_z)
         depth = len(shape)
@@ -60,9 +60,9 @@ class Sphere(Shape):
         for i in range(depth):
             for j in range(height):
                 for k in range(width):
-                    if result[j][k + z_offset] == " " and shape[i][j][k] == "*" and not debug:
+                    if result[j][k + z_offset] == " " and shape[i][j][k] == "*" and not self.debug:
                         result[j][k + z_offset] = chars[char]
-                    elif result[j][k + z_offset] == " " and shape[i][j][k] == "*" and debug:
+                    elif result[j][k + z_offset] == " " and shape[i][j][k] == "*" and self.debug:
                         result[j][k + z_offset] = num
             char = 0 if char == len(chars) - 1 else char + 1
             num += 1

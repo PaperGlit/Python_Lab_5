@@ -17,7 +17,7 @@ class Pyramid(Shape):
                         for x in range(len(shape[0]))] for y in range(len(shape[0][0]))]
         return final_shape
 
-    def to_2d(self, debug = False):
+    def to_2d(self):
         shape = self.shape
         z_offset = max(0, -self.pos_z)
         depth = len(shape)
@@ -32,9 +32,9 @@ class Pyramid(Shape):
             for i in reversed(range(height)):
                 j1 = offset
                 for j in range(width):
-                    if result[i1][j1] == " " and shape[midpoint][i][j] == "*" and not debug:
+                    if result[i1][j1] == " " and shape[midpoint][i][j] == "*" and not self.debug:
                         result[i1][j1] = char
-                    elif result[i1][j1] == " " and shape[midpoint][i][j] == "*" and debug:
+                    elif result[i1][j1] == " " and shape[midpoint][i][j] == "*" and self.debug:
                         result[i1][j1] = num
                     j1 += 1
                 i1 -= 1
